@@ -5,28 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="380b690f-0f8e-45f8-95cf-3f25b2150971" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/resultsEquals.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resultsLessThan.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/derbyclient/BadStudentMajor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/derbyclient/ChangeMajor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/derbyclient/CleverFindMajors.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/derbyclient/CreateStudentDB.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/derbyclient/CreateTestDB.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/derbyclient/EmbeddedStudentMajor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/derbyclient/FindMajors.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/derbyclient/PreparedFindMajors.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/derbyclient/StudentMajor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/derbyclient/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simpleclient/SimpleIJ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/simpleclient/SimpleIJ.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simpleclient/StudentMajorNoJDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/simpleclient/StudentMajorNoJDBC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simpleclient/embedded/ChangeMajor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/simpleclient/embedded/ChangeMajor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simpleclient/embedded/CreateStudentDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/simpleclient/embedded/CreateStudentDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simpleclient/embedded/FindMajors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/simpleclient/embedded/FindMajors.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simpleclient/embedded/StudentMajor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/simpleclient/embedded/StudentMajor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simpleclient/network/ChangeMajor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/simpleclient/network/ChangeMajor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simpleclient/network/CreateStudentDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/simpleclient/network/CreateStudentDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simpleclient/network/FindMajors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/simpleclient/network/FindMajors.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simpleclient/network/StudentMajor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/simpleclient/network/StudentMajor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -359,7 +338,7 @@
       <workItem from="1635990026744" duration="1218000" />
       <workItem from="1636130586576" duration="8111000" />
       <workItem from="1638482382224" duration="80000" />
-      <workItem from="1638483260187" duration="338000" />
+      <workItem from="1638483260187" duration="903000" />
     </task>
     <servers />
   </component>
