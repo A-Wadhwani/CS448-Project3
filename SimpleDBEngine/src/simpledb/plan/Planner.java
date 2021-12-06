@@ -10,12 +10,12 @@ import simpledb.parse.*;
 public class Planner {
    private QueryPlanner qplanner;
    private UpdatePlanner uplanner;
-   
+
    public Planner(QueryPlanner qplanner, UpdatePlanner uplanner) {
       this.qplanner = qplanner;
       this.uplanner = uplanner;
    }
-   
+
    /**
     * Creates a plan for an SQL select statement, using the supplied planner.
     * @param qry the SQL query string
@@ -28,7 +28,7 @@ public class Planner {
       verifyQuery(data);
       return qplanner.createPlan(data, tx);
    }
-   
+
    /**
     * Executes an SQL insert, delete, modify, or
     * create statement.
@@ -55,10 +55,12 @@ public class Planner {
          return uplanner.executeCreateView((CreateViewData)data, tx);
       else if (data instanceof CreateIndexData)
          return uplanner.executeCreateIndex((CreateIndexData)data, tx);
-      else
+      else if (data instanceof Integer && (Integer) data == 4){
+         return uplanner.executeCheckpoint(tx);
+      } else
          return 0;
    }
- 
+
    // SimpleDB does not verify queries, although it should.
    private void verifyQuery(QueryData data) {
    }

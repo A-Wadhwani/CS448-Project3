@@ -6,6 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="380b690f-0f8e-45f8-95cf-3f25b2150971" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/parse/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/parse/Lexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/parse/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/parse/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/plan/Planner.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/plan/Planner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryMgr.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryMgr.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -224,10 +228,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Aryan Wadhwani\Documents\Fall 2021\CS 44800 - Introduction to Relational Database Systems\Projects\Project 3\CS448-Project3\SimpleDBClients" />
       <recent name="$PROJECT_DIR$/studentdb" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.JoinBenchmarking">
+  <component name="RunManager" selected="Application.RecoveryTest">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -252,12 +257,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BufferMgrTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="simpledb.buffer.BufferMgrTest" />
+    <configuration name="JoinBenchmarking" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="simpledb.JoinBenchmarking" />
       <module name="SimpleDBEngine" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="simpledb.buffer.*" />
+          <option name="PATTERN" value="simpledb.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -265,12 +270,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="JoinBenchmarking" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="simpledb.JoinBenchmarking" />
+    <configuration name="RecoveryTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="simpledb.tx.recovery.RecoveryTest" />
       <module name="SimpleDBEngine" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="simpledb.*" />
+          <option name="PATTERN" value="simpledb.tx.recovery.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -306,11 +311,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.JoinBenchmarking" />
+        <item itemvalue="Application.RecoveryTest" />
         <item itemvalue="Application.SimpleIJ" />
         <item itemvalue="Application.StartServer" />
+        <item itemvalue="Application.JoinBenchmarking" />
         <item itemvalue="Application.BufferMgrProfiling" />
-        <item itemvalue="Application.BufferMgrTest" />
       </list>
     </recent_temporary>
   </component>
@@ -338,7 +343,8 @@
       <workItem from="1635990026744" duration="1218000" />
       <workItem from="1636130586576" duration="8111000" />
       <workItem from="1638482382224" duration="80000" />
-      <workItem from="1638483260187" duration="903000" />
+      <workItem from="1638483260187" duration="4102000" />
+      <workItem from="1638742420926" duration="8438000" />
     </task>
     <servers />
   </component>

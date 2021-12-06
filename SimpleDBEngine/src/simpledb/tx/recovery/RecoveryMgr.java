@@ -59,6 +59,10 @@ public class RecoveryMgr {
       lm.flush(lsn);
    }
 
+   public static void createCheckpoint(){
+
+   }
+
    /**
     * Write a setint record to the log and return its lsn.
     * @param buff the buffer containing the page
