@@ -53,6 +53,11 @@ public class BasicUpdatePlanner implements UpdatePlanner {
          Constant val = iter.next();
          us.setVal(fldname, val);
       }
+      try {
+         Thread.sleep(20000);
+      } catch (InterruptedException e) {
+         e.printStackTrace();
+      }
       us.close();
       return 1;
    }

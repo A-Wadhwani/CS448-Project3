@@ -1,5 +1,6 @@
 package simpledb.tx.recovery;
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 import simpledb.file.*;
@@ -64,17 +65,18 @@ public class RecoveryMgr {
     }
 
     public void checkpoint() {
-        while (!isIdle()) {
+        while (!Transaction.isIdle(txnum)) {
+            System.out.println("Idling");
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 return;
             }
         }
-        doRecover();
         bm.flushAll(txnum);
         int lsn = CheckpointRecord.writeToLog(lm);
         lm.flush(lsn);
+        System.out.println("Checkpoint Created");
     }
 
     /**
@@ -144,28 +146,5 @@ public class RecoveryMgr {
             else if (!finishedTxs.contains(rec.txNumber()))
                 rec.undo(tx);
         }
-    }
-
-    /**
-     * The method iterates through the log records.
-     * Whenever it finds a log record for an unfinished
-     * transaction, it calls undo() on that record.
-     * The method stops when it encounters a CHECKPOINT record
-     * or the end of the log
-     */
-    private boolean isIdle() {
-        Collection<Integer> finishedTxs = new ArrayList<>();
-        Iterator<byte[]> iter = lm.iterator();
-        while (iter.hasNext()) {
-            byte[] bytes = iter.next();
-            LogRecord rec = LogRecord.createLogRecord(bytes);
-            if (rec.op() == CHECKPOINT)
-                return false;
-            if (rec.op() == COMMIT || rec.op() == ROLLBACK)
-                finishedTxs.add(rec.txNumber());
-            else if (!finishedTxs.contains(rec.txNumber()))
-                return true;
-        }
-        return false;
     }
 }

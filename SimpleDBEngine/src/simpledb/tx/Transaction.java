@@ -6,6 +6,8 @@ import simpledb.buffer.*;
 import simpledb.tx.recovery.*;
 import simpledb.tx.concurrency.ConcurrencyMgr;
 
+import java.util.Vector;
+
 /**
  * Provide transaction management for clients,
  * ensuring that all transactions are serializable, recoverable,
@@ -14,6 +16,7 @@ import simpledb.tx.concurrency.ConcurrencyMgr;
  */
 public class Transaction {
    private static int nextTxNum = 0;
+   private static Vector<Integer> activeTrans; // ArrayList, but thread safe
    private static final int END_OF_FILE = -1;
    private RecoveryMgr    recoveryMgr;
    private ConcurrencyMgr concurMgr;
@@ -35,12 +38,16 @@ public class Transaction {
     * is called first.
     */
    public Transaction(FileMgr fm, LogMgr lm, BufferMgr bm) {
+      if (activeTrans == null){
+         activeTrans = new Vector<>();
+      }
       this.fm = fm;
       this.bm = bm;
       txnum       = nextTxNumber();
       recoveryMgr = new RecoveryMgr(this, txnum, lm, bm);
       concurMgr   = new ConcurrencyMgr();
       mybuffers = new BufferList(bm);
+      activeTrans.add(txnum);
    }
    
    /**
@@ -54,6 +61,7 @@ public class Transaction {
       System.out.println("transaction " + txnum + " committed");
       concurMgr.release();
       mybuffers.unpinAll();
+      activeTrans.remove(Integer.valueOf(txnum));
    }
    
    /**
@@ -68,6 +76,7 @@ public class Transaction {
       System.out.println("transaction " + txnum + " rolled back");
       concurMgr.release();
       mybuffers.unpinAll();
+      activeTrans.remove(Integer.valueOf(txnum));
    }
    
    /**
@@ -224,5 +233,12 @@ public class Transaction {
    private static synchronized int nextTxNumber() {
       nextTxNum++;
       return nextTxNum;
+   }
+
+   public static synchronized boolean isIdle(int txnum) {
+      if (activeTrans.contains(txnum)){
+         return activeTrans.size() == 1;
+      }
+      return false;
    }
 }
