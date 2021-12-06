@@ -7,6 +7,8 @@ import simpledb.tx.recovery.*;
 import simpledb.tx.concurrency.ConcurrencyMgr;
 
 import java.util.Vector;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Provide transaction management for clients,
@@ -237,6 +239,7 @@ public class Transaction {
 
    public static synchronized boolean isIdle(int txnum) {
       if (activeTrans.contains(txnum)){
+         // If there's any transactions apart from the
          return activeTrans.size() == 1;
       }
       return false;

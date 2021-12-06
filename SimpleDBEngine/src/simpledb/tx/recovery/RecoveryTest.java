@@ -13,14 +13,16 @@ public class RecoveryTest {
     private static Transaction tx4;
 
     public static void main(String[] args) throws Exception {
-        newTest();
+        idleTest();
     }
 
     /*
-     *
+     * Remove checkpointtest folder. Run twice.
+     * Observe how the checkpoint is only made after
+     * other transactions are committed.
      */
-    public static void checkpointTest() {
-        db = new SimpleDB("recoverytest", 400, 8);
+    public static void idleTest() {
+        db = new SimpleDB("idletest", 400, 8);
         fm = db.fileMgr();
         bm = db.bufferMgr();
         blk0 = new BlockId("testfile", 0);
@@ -29,7 +31,31 @@ public class RecoveryTest {
         if (fm.length("testfile") == 0) {
             initialize();
             modify();
-            tx4.checkpoint(); // Write a checkpoint
+            stayidle();
+            checkpoint();
+        } else {
+            recover();
+        }
+    }
+
+    /*
+     * Remove checkpointtest folder. Run twice.
+     * In comparison to Original test, a checkpoint
+     * is created after the transactions are committed.
+     * We should be able to see the changes after
+     * rollback visible when running it again.
+     */
+    public static void checkpointTest() {
+        db = new SimpleDB("checkpointtest", 400, 8);
+        fm = db.fileMgr();
+        bm = db.bufferMgr();
+        blk0 = new BlockId("testfile", 0);
+        blk1 = new BlockId("testfile", 1);
+
+        if (fm.length("testfile") == 0) {
+            initialize();
+            modify();
+            checkpoint();
         } else {
             recover();
         }
@@ -89,6 +115,37 @@ public class RecoveryTest {
         printValues("After rollback:");
         // tx4 stops here without committing or rolling back,
         // so all its changes should be undone during recovery.
+    }
+
+    private static void checkpoint(){
+        System.out.println("Attempting Checkpoint");
+        tx4.checkpoint(); // Attempt making a checkpoint
+        System.out.println("Checkpoint Created");
+    }
+
+    private static void stayidle() {
+        System.out.println("Beginning Idling");
+        // New Transaction
+        Runnable task2 = () -> {
+            Transaction tx5 = db.newTx();
+            tx5.pin(blk0);
+            int pos = 0;
+            for (int i = 0; i < 6; i++) {
+                tx5.setInt(blk0, pos, pos + 100, true);
+                pos += Integer.BYTES;
+            }
+            tx5.setString(blk0, 30, "pqr", true);
+            bm.flushAll(5);
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException ignored) {}
+            tx5.commit();
+            printValues("After idling:");
+        };
+        new Thread(task2).start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ignored) {}
     }
 
     private static void recover() {

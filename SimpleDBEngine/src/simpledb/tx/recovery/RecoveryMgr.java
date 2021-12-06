@@ -66,7 +66,6 @@ public class RecoveryMgr {
 
     public void checkpoint() {
         while (!Transaction.isIdle(txnum)) {
-            System.out.println("Idling");
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -76,7 +75,6 @@ public class RecoveryMgr {
         bm.flushAll(txnum);
         int lsn = CheckpointRecord.writeToLog(lm);
         lm.flush(lsn);
-        System.out.println("Checkpoint Created");
     }
 
     /**
