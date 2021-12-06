@@ -82,6 +82,11 @@ public class Transaction {
       bm.flushAll(txnum);
       recoveryMgr.recover();
    }
+
+   public void checkpoint(){
+      bm.flushAll(txnum);
+      recoveryMgr.checkpoint();
+   }
    
    /**
     * Pin the specified block.

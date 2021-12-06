@@ -65,7 +65,7 @@ public interface UpdatePlanner {
    public int executeCreateIndex(CreateIndexData data, Transaction tx);
 
    public default int executeCheckpoint(Transaction tx){
-
-      return 0;
+       tx.checkpoint();
+       return 0;
    }
 }

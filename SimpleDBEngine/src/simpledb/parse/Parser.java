@@ -104,7 +104,7 @@ public class Parser {
     }
 
     private Object checkpoint() {
-        return new StringBuffer();
+        return 4;
     }
 
     private Object create() {

@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="380b690f-0f8e-45f8-95cf-3f25b2150971" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/parse/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/parse/Lexer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/parse/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/parse/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/plan/Planner.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/plan/Planner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/plan/UpdatePlanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/plan/UpdatePlanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/Transaction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryMgr.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryMgr.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -311,9 +311,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.RecoveryTest" />
         <item itemvalue="Application.SimpleIJ" />
         <item itemvalue="Application.StartServer" />
+        <item itemvalue="Application.RecoveryTest" />
         <item itemvalue="Application.JoinBenchmarking" />
         <item itemvalue="Application.BufferMgrProfiling" />
       </list>
@@ -344,7 +344,7 @@
       <workItem from="1636130586576" duration="8111000" />
       <workItem from="1638482382224" duration="80000" />
       <workItem from="1638483260187" duration="4102000" />
-      <workItem from="1638742420926" duration="8438000" />
+      <workItem from="1638742420926" duration="9431000" />
     </task>
     <servers />
   </component>
