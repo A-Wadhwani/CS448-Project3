@@ -65,8 +65,13 @@ public class RecoveryMgr {
 
     public void checkpoint() {
         while (!isIdle()) {
-
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                return;
+            }
         }
+        doRecover();
         bm.flushAll(txnum);
         int lsn = CheckpointRecord.writeToLog(lm);
         lm.flush(lsn);
@@ -155,12 +160,12 @@ public class RecoveryMgr {
             byte[] bytes = iter.next();
             LogRecord rec = LogRecord.createLogRecord(bytes);
             if (rec.op() == CHECKPOINT)
-                return true;
+                return false;
             if (rec.op() == COMMIT || rec.op() == ROLLBACK)
                 finishedTxs.add(rec.txNumber());
             else if (!finishedTxs.contains(rec.txNumber()))
-                return false;
+                return true;
         }
-        return true;
+        return false;
     }
 }
