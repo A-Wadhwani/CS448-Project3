@@ -1,5 +1,6 @@
 package simpledb.tx.recovery;
 
+import simpleclient.network.CreateStudentDB;
 import simpledb.server.SimpleDB;
 import simpledb.file.*;
 import simpledb.buffer.BufferMgr;
@@ -13,8 +14,11 @@ public class RecoveryTest {
     private static Transaction tx4;
 
     public static void main(String[] args) throws Exception {
-        idleTest();
+//        idleTest();
+//        checkpointTest();
+//        originalTest();
     }
+
 
     /*
      * Remove idletest folder. Run twice.
@@ -64,7 +68,7 @@ public class RecoveryTest {
     }
 
     public static void originalTest() {
-        db = new SimpleDB("recoverytest", 400, 8);
+        db = new SimpleDB("originaltest", 400, 8);
         fm = db.fileMgr();
         bm = db.bufferMgr();
         blk0 = new BlockId("testfile", 0);

@@ -20,6 +20,7 @@ public class RecoveryMgr {
     private Transaction tx;
     private int txnum;
     public static int iterations;
+    public static boolean DEBUG_MODE = true;
 
     /**
      * Create a recovery manager for the specified transaction.
@@ -59,6 +60,11 @@ public class RecoveryMgr {
      */
     public void recover() {
         doRecover();
+        if (DEBUG_MODE) {
+            System.out.println("Recovery Complete: " + getLog());
+            System.out.println();
+            System.out.println("Log File Reads: " + iterations);
+        }
         bm.flushAll(txnum);
         int lsn = CheckpointRecord.writeToLog(lm);
         lm.flush(lsn);
@@ -75,6 +81,10 @@ public class RecoveryMgr {
         bm.flushAll();
         int lsn = CheckpointRecord.writeToLog(lm);
         lm.flush(lsn);
+        if (DEBUG_MODE) {
+            System.out.println("Checkpoint Made: " + getLog());
+            System.out.println();
+        }
     }
 
     /**
@@ -149,30 +159,73 @@ public class RecoveryMgr {
         }
     }
 
-    public String getLog(){
+    /**
+     * getLog(), but until first checkpoint is reached.
+     */
+    public String getLogTC() {
         Iterator<byte[]> iter = lm.iterator();
         String list = "";
+        boolean lastModified = true;
         while (iter.hasNext()) {
             byte[] bytes = iter.next();
             LogRecord rec = LogRecord.createLogRecord(bytes);
-            switch (rec.op()){
+            switch (rec.op()) {
+                case CHECKPOINT:
+                    list += "CHECKPOINT-";
+                    return list;
+                case START:
+                    list += "START-";
+                    lastModified = false;
+                    break;
+                case COMMIT:
+                    list += "COMMIT-";
+                    lastModified = false;
+                    break;
+                case ROLLBACK:
+                    list += "ROLLBACK-";
+                    lastModified = false;
+                    break;
+                case SETINT:
+                case SETSTRING:
+                    if (!lastModified) {
+                        list += "MODIFY-";
+                        lastModified = true;
+                    }
+                    break;
+            }
+        }
+        return list;
+    }
+
+    public String getLog() {
+        Iterator<byte[]> iter = lm.iterator();
+        String list = "";
+        boolean lastModified = true;
+        while (iter.hasNext()) {
+            byte[] bytes = iter.next();
+            LogRecord rec = LogRecord.createLogRecord(bytes);
+            switch (rec.op()) {
                 case CHECKPOINT:
                     list += "CHECKPOINT-";
                     break;
                 case START:
                     list += "START-";
+                    lastModified = false;
                     break;
                 case COMMIT:
                     list += "COMMIT-";
+                    lastModified = false;
                     break;
                 case ROLLBACK:
                     list += "ROLLBACK-";
+                    lastModified = false;
                     break;
                 case SETINT:
-                    list += "SETINT-";
-                    break;
                 case SETSTRING:
-                    list += "SETSTRING-";
+                    if (!lastModified) {
+                        list += "MODIFY-";
+                        lastModified = true;
+                    }
                     break;
             }
         }
