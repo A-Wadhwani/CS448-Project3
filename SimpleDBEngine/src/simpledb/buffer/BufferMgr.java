@@ -44,6 +44,15 @@ public class BufferMgr {
          if (buff.modifyingTx() == txnum)
          buff.flush();
    }
+
+   /**
+    * Flushes all dirty buffers modified by any transaction
+    */
+   public synchronized void flushAll(){
+      for (Buffer buff : bufferpool)
+         if (buff.modifyingTx() >= 0)
+            buff.flush();
+   }
    
    
    /**

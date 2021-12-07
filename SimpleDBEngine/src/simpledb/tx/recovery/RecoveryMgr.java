@@ -20,6 +20,7 @@ public class RecoveryMgr {
     private BufferMgr bm;
     private Transaction tx;
     private int txnum;
+    public static int undos;
 
     /**
      * Create a recovery manager for the specified transaction.
@@ -38,7 +39,7 @@ public class RecoveryMgr {
      * Write a commit record to the log, and flushes it to disk.
      */
     public void commit() {
-        bm.flushAll(txnum);
+        bm.flushAll(txnum); // Comment it out for part 1
         int lsn = CommitRecord.writeToLog(lm, txnum);
         lm.flush(lsn);
     }
@@ -72,7 +73,7 @@ public class RecoveryMgr {
                 return;
             }
         }
-        bm.flushAll(txnum);
+        bm.flushAll();
         int lsn = CheckpointRecord.writeToLog(lm);
         lm.flush(lsn);
     }
@@ -132,6 +133,7 @@ public class RecoveryMgr {
      * or the end of the log.
      */
     private void doRecover() {
+        undos = 0;
         Collection<Integer> finishedTxs = new ArrayList<>();
         Iterator<byte[]> iter = lm.iterator();
         while (iter.hasNext()) {
@@ -141,8 +143,10 @@ public class RecoveryMgr {
                 return;
             if (rec.op() == COMMIT || rec.op() == ROLLBACK)
                 finishedTxs.add(rec.txNumber());
-            else if (!finishedTxs.contains(rec.txNumber()))
+            else if (!finishedTxs.contains(rec.txNumber())) {
                 rec.undo(tx);
+            }
+            undos++;
         }
     }
 }

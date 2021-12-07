@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="380b690f-0f8e-45f8-95cf-3f25b2150971" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recoverytest/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recoverytest/simpledb.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recoverytest/testfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/buffer/BufferMgr.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/buffer/BufferMgr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryMgr.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryMgr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryTest.java" afterDir="false" />
     </list>
@@ -353,7 +350,7 @@
       <workItem from="1636130586576" duration="8111000" />
       <workItem from="1638482382224" duration="80000" />
       <workItem from="1638483260187" duration="4102000" />
-      <workItem from="1638742420926" duration="19160000" />
+      <workItem from="1638742420926" duration="30385000" />
     </task>
     <servers />
   </component>

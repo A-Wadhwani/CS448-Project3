@@ -13,7 +13,7 @@ public class RecoveryTest {
     private static Transaction tx4;
 
     public static void main(String[] args) throws Exception {
-        idleTest();
+        originalTest();
     }
 
     /*
@@ -58,6 +58,7 @@ public class RecoveryTest {
             checkpoint();
         } else {
             recover();
+            System.out.println("Undos with Checkpoint: " + RecoveryMgr.undos);
         }
     }
 
@@ -73,6 +74,7 @@ public class RecoveryTest {
             modify();
         } else {
             recover();
+            System.out.println("Undos without Checkpoint: " + RecoveryMgr.undos);
         }
     }
 
