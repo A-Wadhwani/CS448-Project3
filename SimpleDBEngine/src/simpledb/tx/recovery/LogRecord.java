@@ -13,7 +13,7 @@ public interface LogRecord {
          SETINT = 4, SETSTRING = 5;
 
    /**
-    * Returns the log record's type. 
+    * Returns the log record's type.
     * @return the log record's type
     */
    int op();

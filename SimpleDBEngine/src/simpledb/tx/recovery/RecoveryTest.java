@@ -13,11 +13,11 @@ public class RecoveryTest {
     private static Transaction tx4;
 
     public static void main(String[] args) throws Exception {
-        originalTest();
+        idleTest();
     }
 
     /*
-     * Remove checkpointtest folder. Run twice.
+     * Remove idletest folder. Run twice.
      * Observe how the checkpoint is only made after
      * other transactions are committed.
      */
@@ -56,9 +56,10 @@ public class RecoveryTest {
             initialize();
             modify();
             checkpoint();
+            System.out.println(tx4.getLog());
         } else {
             recover();
-            System.out.println("Undos with Checkpoint: " + RecoveryMgr.undos);
+            System.out.println("Undos with Checkpoint: " + RecoveryMgr.iterations);
         }
     }
 
@@ -74,7 +75,7 @@ public class RecoveryTest {
             modify();
         } else {
             recover();
-            System.out.println("Undos without Checkpoint: " + RecoveryMgr.undos);
+            System.out.println("Undos without Checkpoint: " + RecoveryMgr.iterations);
         }
     }
 

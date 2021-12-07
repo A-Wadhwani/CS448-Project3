@@ -1,6 +1,5 @@
 package simpledb.tx.recovery;
 
-import java.sql.SQLOutput;
 import java.util.*;
 
 import simpledb.file.*;
@@ -20,7 +19,7 @@ public class RecoveryMgr {
     private BufferMgr bm;
     private Transaction tx;
     private int txnum;
-    public static int undos;
+    public static int iterations;
 
     /**
      * Create a recovery manager for the specified transaction.
@@ -133,7 +132,7 @@ public class RecoveryMgr {
      * or the end of the log.
      */
     private void doRecover() {
-        undos = 0;
+        iterations = 0;
         Collection<Integer> finishedTxs = new ArrayList<>();
         Iterator<byte[]> iter = lm.iterator();
         while (iter.hasNext()) {
@@ -146,7 +145,37 @@ public class RecoveryMgr {
             else if (!finishedTxs.contains(rec.txNumber())) {
                 rec.undo(tx);
             }
-            undos++;
+            iterations++;
         }
+    }
+
+    public String getLog(){
+        Iterator<byte[]> iter = lm.iterator();
+        String list = "";
+        while (iter.hasNext()) {
+            byte[] bytes = iter.next();
+            LogRecord rec = LogRecord.createLogRecord(bytes);
+            switch (rec.op()){
+                case CHECKPOINT:
+                    list += "CHECKPOINT-";
+                    break;
+                case START:
+                    list += "START-";
+                    break;
+                case COMMIT:
+                    list += "COMMIT-";
+                    break;
+                case ROLLBACK:
+                    list += "ROLLBACK-";
+                    break;
+                case SETINT:
+                    list += "SETINT-";
+                    break;
+                case SETSTRING:
+                    list += "SETSTRING-";
+                    break;
+            }
+        }
+        return list;
     }
 }

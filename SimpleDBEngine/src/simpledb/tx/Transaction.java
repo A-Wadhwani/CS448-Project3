@@ -244,4 +244,8 @@ public class Transaction {
       }
       return false;
    }
+
+   public String getLog() {
+      return recoveryMgr.getLog();
+   }
 }
