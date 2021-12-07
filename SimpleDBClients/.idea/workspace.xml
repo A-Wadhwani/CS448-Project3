@@ -5,10 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="380b690f-0f8e-45f8-95cf-3f25b2150971" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/SimpleDBEngine.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/SimpleDBEngine.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/plan/BasicUpdatePlanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/plan/BasicUpdatePlanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryMgr.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryMgr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpointtest/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpointtest/simpledb.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpointtest/testfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/idletest/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/idletest/simpledb.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/idletest/testfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simpleclient/network/CreateStudentDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/simpleclient/network/CreateStudentDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/parse/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/parse/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -232,7 +238,7 @@
       <recent name="$PROJECT_DIR$/studentdb" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.SimpleIJ">
+  <component name="RunManager" selected="Application.RecoveryTest">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -318,10 +324,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.StartServer" />
-        <item itemvalue="Application.SimpleIJ" />
-        <item itemvalue="Application.CreateStudentDB" />
         <item itemvalue="Application.RecoveryTest" />
+        <item itemvalue="Application.StartServer" />
+        <item itemvalue="Application.CreateStudentDB" />
+        <item itemvalue="Application.SimpleIJ" />
         <item itemvalue="Application.JoinBenchmarking" />
       </list>
     </recent_temporary>
@@ -353,7 +359,7 @@
       <workItem from="1638483260187" duration="4102000" />
       <workItem from="1638742420926" duration="31036000" />
       <workItem from="1638855939944" duration="2384000" />
-      <workItem from="1638906256926" duration="3647000" />
+      <workItem from="1638906256926" duration="7362000" />
     </task>
     <servers />
   </component>

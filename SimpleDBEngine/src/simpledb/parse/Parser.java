@@ -104,6 +104,7 @@ public class Parser {
     }
 
     private Object checkpoint() {
+        lex.eatKeyword("checkpoint");
         return 4;
     }
 

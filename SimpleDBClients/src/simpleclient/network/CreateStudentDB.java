@@ -4,6 +4,8 @@ import java.sql.*;
 import simpledb.jdbc.network.NetworkDriver;
 
 public class CreateStudentDB {
+
+   private static boolean doCheckpoint = false;
    public static void main(String[] args) {
       Driver d = new NetworkDriver();
       String url = "jdbc:simpledb://localhost";
@@ -83,6 +85,10 @@ public class CreateStudentDB {
          for (int i=0; i<enrollvals.length; i++)
             stmt.executeUpdate(s + enrollvals[i]);
          System.out.println("ENROLL records inserted.");
+
+         if (doCheckpoint){
+            stmt.executeUpdate("checkpoint");
+         }
 
       }
       catch(SQLException e) {
