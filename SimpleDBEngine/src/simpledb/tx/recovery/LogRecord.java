@@ -33,6 +33,8 @@ public interface LogRecord {
     */
    void undo(Transaction tx);
 
+   void redo(Transaction tx);
+
    /**
     * Interpret the bytes returned by the log iterator.
     * @param bytes

@@ -90,12 +90,10 @@ public class Transaction {
     * before user transactions begin.
     */
    public void recover() {
-      bm.flushAll(txnum);
       recoveryMgr.recover();
    }
 
    public void checkpoint(){
-      bm.flushAll(txnum);
       recoveryMgr.checkpoint();
    }
    

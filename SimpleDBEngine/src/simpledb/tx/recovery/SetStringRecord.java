@@ -6,7 +6,7 @@ import simpledb.tx.Transaction;
 
 public class SetStringRecord implements LogRecord {
    private int txnum, offset;
-   private String val;
+   private String val, newval;
    private BlockId blk;
 
    /**
@@ -25,6 +25,8 @@ public class SetStringRecord implements LogRecord {
       offset = p.getInt(opos);
       int vpos = opos + Integer.BYTES;      
       val = p.getString(vpos);
+      int nvpos = vpos + Page.maxLength(val.length());
+      newval = p.getString(nvpos);
    }
 
    public int op() {
@@ -36,7 +38,7 @@ public class SetStringRecord implements LogRecord {
    }
 
    public String toString() {
-      return "<SETSTRING " + txnum + " " + blk + " " + offset + " " + val + ">";
+      return "<SETSTRING " + txnum + " " + blk + " " + offset + " " + val + " " + newval + ">";
    }
 
    /**
@@ -52,6 +54,12 @@ public class SetStringRecord implements LogRecord {
       tx.unpin(blk);
    }
 
+   public void redo(Transaction tx) {
+      tx.pin(blk);
+      tx.setString(blk, offset, newval, false); // don't log the redo!
+      tx.unpin(blk);
+   }
+
    /**
     * A static method to write a setInt record to the log.
     * This log record contains the SETINT operator,
@@ -60,13 +68,14 @@ public class SetStringRecord implements LogRecord {
     * integer value at that offset.
     * @return the LSN of the last log value
     */
-   public static int writeToLog(LogMgr lm, int txnum, BlockId blk, int offset, String val) {
+   public static int writeToLog(LogMgr lm, int txnum, BlockId blk, int offset, String val, String newval) {
       int tpos = Integer.BYTES;
       int fpos = tpos + Integer.BYTES;
       int bpos = fpos + Page.maxLength(blk.fileName().length());
       int opos = bpos + Integer.BYTES;
       int vpos = opos + Integer.BYTES;
-      int reclen = vpos + Page.maxLength(val.length());
+      int nvpos = vpos + Page.maxLength(val.length());
+      int reclen = nvpos + Page.maxLength(newval.length());
       byte[] rec = new byte[reclen];
       Page p = new Page(rec);
       p.setInt(0, SETSTRING);
@@ -75,6 +84,7 @@ public class SetStringRecord implements LogRecord {
       p.setInt(bpos, blk.number());
       p.setInt(opos, offset);
       p.setString(vpos, val);
+      p.setString(nvpos, newval);
       return lm.append(rec);
    }
 }

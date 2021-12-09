@@ -39,7 +39,7 @@ public class RecoveryMgr {
      * Write a commit record to the log, and flushes it to disk.
      */
     public void commit() {
-        bm.flushAll(txnum); // Comment it out for part 1
+//        bm.flushAll(txnum);
         int lsn = CommitRecord.writeToLog(lm, txnum);
         lm.flush(lsn);
     }
@@ -65,7 +65,7 @@ public class RecoveryMgr {
             System.out.println();
             System.out.println("Log File Reads: " + iterations);
         }
-        bm.flushAll(txnum);
+        bm.flushAll();
         int lsn = CheckpointRecord.writeToLog(lm);
         lm.flush(lsn);
     }
@@ -97,7 +97,7 @@ public class RecoveryMgr {
     public int setInt(Buffer buff, int offset, int newval) {
         int oldval = buff.contents().getInt(offset);
         BlockId blk = buff.block();
-        return SetIntRecord.writeToLog(lm, txnum, blk, offset, oldval);
+        return SetIntRecord.writeToLog(lm, txnum, blk, offset, oldval, newval);
     }
 
     /**
@@ -110,7 +110,7 @@ public class RecoveryMgr {
     public int setString(Buffer buff, int offset, String newval) {
         String oldval = buff.contents().getString(offset);
         BlockId blk = buff.block();
-        return SetStringRecord.writeToLog(lm, txnum, blk, offset, oldval);
+        return SetStringRecord.writeToLog(lm, txnum, blk, offset, oldval, newval);
     }
 
     /**
@@ -142,20 +142,43 @@ public class RecoveryMgr {
      * or the end of the log.
      */
     private void doRecover() {
-        iterations = 0;
-        Collection<Integer> finishedTxs = new ArrayList<>();
+        //finding transactions after checkpoint
+        ArrayList<LogRecord> logList = new ArrayList<>();
         Iterator<byte[]> iter = lm.iterator();
         while (iter.hasNext()) {
             byte[] bytes = iter.next();
             LogRecord rec = LogRecord.createLogRecord(bytes);
-            if (rec.op() == CHECKPOINT)
-                return;
-            if (rec.op() == COMMIT || rec.op() == ROLLBACK)
-                finishedTxs.add(rec.txNumber());
-            else if (!finishedTxs.contains(rec.txNumber())) {
-                rec.undo(tx);
+            logList.add(rec);
+            if (rec.op() == CHECKPOINT) {
+                break;
             }
-            iterations++;
+        }
+        //redo phase
+        Collections.reverse(logList);
+        Collection<Integer> undoList = new ArrayList<>();
+        for (int i = 0; i < logList.size(); i++) {
+            LogRecord record = logList.get(i);
+            if (record.op() == START) {
+                undoList.add(record.txNumber());
+            } else if (record.op() == COMMIT || record.op() == ROLLBACK) {
+                undoList.remove(record.txNumber());
+            }
+            record.redo(tx);
+        }
+        //undo phase
+        iter = lm.iterator();
+        while (iter.hasNext()) {
+            byte[] bytes = iter.next();
+            LogRecord rec = LogRecord.createLogRecord(bytes);
+            if (undoList.isEmpty()) {
+                break;
+            } else if (undoList.contains(rec.txNumber()) && (rec.op() == SETSTRING || rec.op() == SETINT)) {
+                rec.undo(tx);
+            } else if (undoList.contains(rec.txNumber()) && rec.op() == START) {
+                undoList.remove(rec.txNumber());
+                int lsn = RollbackRecord.writeToLog(lm, txnum);
+                lm.flush(lsn);
+            }
         }
     }
 

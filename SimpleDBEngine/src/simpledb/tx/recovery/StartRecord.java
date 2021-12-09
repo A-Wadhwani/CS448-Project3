@@ -29,6 +29,7 @@ public class StartRecord implements LogRecord {
     * contains no undo information.
     */
    public void undo(Transaction tx) {}
+   public void redo(Transaction tx) {}
    
    public String toString() {
       return "<START " + txnum + ">";

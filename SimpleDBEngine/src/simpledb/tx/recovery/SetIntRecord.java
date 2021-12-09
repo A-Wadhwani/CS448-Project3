@@ -5,7 +5,7 @@ import simpledb.log.LogMgr;
 import simpledb.tx.Transaction;
 
 public class SetIntRecord implements LogRecord {
-   private int txnum, offset, val;
+   private int txnum, offset, val, newval;
    private BlockId blk;
 
    /**
@@ -24,6 +24,8 @@ public class SetIntRecord implements LogRecord {
       offset = p.getInt(opos);
       int vpos = opos + Integer.BYTES;      
       val = p.getInt(vpos);
+      int nvpos = vpos + Integer.BYTES;
+      newval = p.getInt(nvpos);
    }
 
    public int op() {
@@ -35,7 +37,7 @@ public class SetIntRecord implements LogRecord {
    }
 
    public String toString() {
-      return "<SETINT " + txnum + " " + blk + " " + offset + " " + val + ">";
+      return "<SETINT " + txnum + " " + blk + " " + offset + " " + val + " " + newval + ">";
    }
 
    /**
@@ -51,6 +53,11 @@ public class SetIntRecord implements LogRecord {
       tx.unpin(blk);
    }
 
+   public void redo(Transaction tx) {tx.pin(blk);
+      tx.setInt(blk, offset, newval, false); // don't log the undo!
+      tx.unpin(blk);
+   }
+
    /**
     * A static method to write a setInt record to the log.
     * This log record contains the SETINT operator,
@@ -59,13 +66,14 @@ public class SetIntRecord implements LogRecord {
     * integer value at that offset.
     * @return the LSN of the last log value
     */
-   public static int writeToLog(LogMgr lm, int txnum, BlockId blk, int offset, int val) {
+   public static int writeToLog(LogMgr lm, int txnum, BlockId blk, int offset, int val, int newval) {
       int tpos = Integer.BYTES;
       int fpos = tpos + Integer.BYTES;
       int bpos = fpos + Page.maxLength(blk.fileName().length());
       int opos = bpos + Integer.BYTES;
       int vpos = opos + Integer.BYTES;
-      byte[] rec = new byte[vpos + Integer.BYTES];
+      int nvpos = vpos + Integer.BYTES;
+      byte[] rec = new byte[nvpos + Integer.BYTES];
       Page p = new Page(rec);
       p.setInt(0, SETINT);
       p.setInt(tpos, txnum);
@@ -73,6 +81,7 @@ public class SetIntRecord implements LogRecord {
       p.setInt(bpos, blk.number());
       p.setInt(opos, offset);
       p.setInt(vpos, val);
+      p.setInt(nvpos, newval);
       return lm.append(rec);
    }
 }

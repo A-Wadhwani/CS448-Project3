@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="380b690f-0f8e-45f8-95cf-3f25b2150971" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpointtest/desktop.ini" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpointtest/simpledb.log" beforeDir="false" />
@@ -13,9 +12,22 @@
       <change beforePath="$PROJECT_DIR$/idletest/desktop.ini" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/idletest/simpledb.log" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/idletest/testfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simpleclient/network/CreateStudentDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/simpleclient/network/CreateStudentDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/parse/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/parse/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/originaltest/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/originaltest/simpledb.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/originaltest/testfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recoverytest/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recoverytest/simpledb.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recoverytest/testfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/CheckpointRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/CheckpointRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/CommitRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/CommitRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/LogRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/LogRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryMgr.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryMgr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RollbackRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RollbackRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/SetIntRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/SetIntRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/SetStringRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/SetStringRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/StartRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/StartRecord.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,12 +68,12 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/simpleclient/SimpleIJ.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/buffer/Buffer.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/buffer/BufferMgrTest.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/buffer/BufferMgr.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/simpleclient/embedded/FindMajors.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/simpleclient/embedded/StudentMajor.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/server/SimpleDB.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/buffer/BufferMgrTest.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/simpleclient/embedded/StudentMajor.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/buffer/Buffer.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/simpleclient/embedded/FindMajors.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/buffer/BufferMgr.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -225,7 +237,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
@@ -233,7 +245,11 @@
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Aryan Wadhwani\Documents\Fall 2021\CS 44800 - Introduction to Relational Database Systems\Projects\Project 3\CS448-Project3\SimpleDBEngine\src\simpledb\tx\recovery" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Aryan Wadhwani\Documents\Fall 2021\CS 44800 - Introduction to Relational Database Systems\Projects\Project 3\CS448-Project3\SimpleDBEngine\src\simpledb\tx\recovery" />
       <recent name="C:\Users\Aryan Wadhwani\Documents\Fall 2021\CS 44800 - Introduction to Relational Database Systems\Projects\Project 3\CS448-Project3\SimpleDBClients" />
       <recent name="$PROJECT_DIR$/studentdb" />
     </key>
@@ -359,7 +375,9 @@
       <workItem from="1638483260187" duration="4102000" />
       <workItem from="1638742420926" duration="31036000" />
       <workItem from="1638855939944" duration="2384000" />
-      <workItem from="1638906256926" duration="7362000" />
+      <workItem from="1638906256926" duration="9186000" />
+      <workItem from="1639090212503" duration="1657000" />
+      <workItem from="1639091908628" duration="311000" />
     </task>
     <servers />
   </component>

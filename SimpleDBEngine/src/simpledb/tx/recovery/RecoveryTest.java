@@ -16,7 +16,7 @@ public class RecoveryTest {
     public static void main(String[] args) throws Exception {
 //        idleTest();
 //        checkpointTest();
-        originalTest();
+//        originalTest();
     }
 
 
