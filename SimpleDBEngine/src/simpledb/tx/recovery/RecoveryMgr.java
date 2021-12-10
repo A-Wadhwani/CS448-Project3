@@ -95,19 +95,6 @@ public class RecoveryMgr {
         return count != active.size();
     }
 
-    public LogRecord getOp(int txNumber) {
-        Iterator<byte[]> iter = lm.iterator();
-        while (iter.hasNext()) {
-            byte[] bytes = iter.next();
-            LogRecord rec = LogRecord.createLogRecord(bytes);
-            if (rec.txNumber() == txNumber) {
-                return rec;
-            }
-
-        }
-        return null;
-    }
-
     /**
      * Write a setint record to the log and return its lsn.
      *
