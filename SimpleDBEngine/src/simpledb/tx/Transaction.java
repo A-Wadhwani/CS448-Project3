@@ -108,6 +108,14 @@ public class Transaction {
       recoveryMgr.end(v);
       isCommitted = true;
    }
+
+   public Vector<Integer> start(){
+      return recoveryMgr.start();
+   }
+
+   public void end(Vector<Integer> v) {
+      recoveryMgr.end(v);
+   }
    
    /**
     * Pin the specified block.

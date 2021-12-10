@@ -13,6 +13,7 @@ import simpledb.log.LogMgr;
  * @author Edward Sciore
  */
 public class Buffer {
+   public static int numFlushes = 0;
    private FileMgr fm;
    private LogMgr lm;
    private Page contents;
@@ -80,7 +81,9 @@ public class Buffer {
       if (txnum >= 0) {
          lm.flush(lsn);
          fm.write(blk, contents);
+         System.out.println(txnum);
          txnum = -1;
+         numFlushes++;
       }
    }
 

@@ -1,5 +1,6 @@
 package simpledb.plan;
 
+import simpledb.buffer.Buffer;
 import simpledb.tx.Transaction;
 import simpledb.parse.*;
 
@@ -66,6 +67,7 @@ public interface UpdatePlanner {
 
    public default int executeCheckpoint(Transaction tx){
        tx.checkpoint();
+      System.out.println("Number of Flushes: " + Buffer.numFlushes);
        return 0;
    }
 }

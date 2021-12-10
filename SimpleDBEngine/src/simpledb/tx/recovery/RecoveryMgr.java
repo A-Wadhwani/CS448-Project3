@@ -19,7 +19,8 @@ public class RecoveryMgr {
     private BufferMgr bm;
     private Transaction tx;
     private int txnum;
-    public static int iterations;
+    public static int undos = 0;
+    public static int redos = 0;
     public static boolean DEBUG_MODE = true;
 
     /**
@@ -194,6 +195,7 @@ public class RecoveryMgr {
                 undoList.remove(record.txNumber());
             }
             record.redo(tx);
+            redos++;
         }
         //undo phase
         iter = lm.iterator();
@@ -204,12 +206,15 @@ public class RecoveryMgr {
                 break;
             } else if (undoList.contains(rec.txNumber()) && (rec.op() == SETSTRING || rec.op() == SETINT)) {
                 rec.undo(tx);
+                undos++;
             } else if (undoList.contains(rec.txNumber()) && rec.op() == START) {
                 undoList.remove(rec.txNumber());
                 int lsn = RollbackRecord.writeToLog(lm, txnum);
                 lm.flush(lsn);
             }
         }
+        System.out.println("Undos: " + RecoveryMgr.undos);
+        System.out.println("Redos: " + RecoveryMgr.redos);
     }
 
     public String getLog() {

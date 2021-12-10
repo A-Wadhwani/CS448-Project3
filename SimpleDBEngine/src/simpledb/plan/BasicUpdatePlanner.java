@@ -1,6 +1,8 @@
 package simpledb.plan;
 
 import java.util.Iterator;
+
+import simpledb.buffer.Buffer;
 import simpledb.tx.Transaction;
 import simpledb.parse.*;
 import simpledb.query.*;
@@ -54,6 +56,7 @@ public class BasicUpdatePlanner implements UpdatePlanner {
          us.setVal(fldname, val);
       }
       us.close();
+      System.out.println("Number of Flushes: " + Buffer.numFlushes);
       return 1;
    }
    
