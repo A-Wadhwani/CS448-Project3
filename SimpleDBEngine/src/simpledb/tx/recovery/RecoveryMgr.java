@@ -62,11 +62,15 @@ public class RecoveryMgr {
         bm.flushAll();
     }
 
-    public void checkpoint() {
-        Collection<Integer> active = Transaction.getActiveTransCopy();
+    public Vector<Integer> start() {
+        Vector<Integer> active = Transaction.getActiveTransCopy();
         int lsn = CheckpointRecord.writeToLog(lm);
         lm.flush(lsn);
-        while (waitForActiveTransactions(active)) {
+        return active;
+    }
+
+    public void end(Vector<Integer> active) {
+        while (wait(active)) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -76,12 +80,14 @@ public class RecoveryMgr {
         for (Integer tx: active) {
             bm.flushAll(tx);
         }
-        lsn = EndCheckpointRecord.writeToLog(lm);
+        int lsn = EndCheckpointRecord.writeToLog(lm, Transaction.completedTrans);
         lm.flush(lsn);
     }
 
-    public boolean waitForActiveTransactions(Collection<Integer> active) {
+    public boolean wait(Collection<Integer> active) {
         int count = 0;
+        if (Transaction.activeTrans.contains(txnum))
+            count++;
         for (Integer i : active)
             if (!Transaction.activeTrans.contains(i))
                 count++;
@@ -164,7 +170,16 @@ public class RecoveryMgr {
             byte[] bytes = iter.next();
             LogRecord rec = LogRecord.createLogRecord(bytes);
             logList.add(rec);
-            if (rec.op() == CHECKPOINT) {
+            if (rec.op() == END) {
+                // Find END checkpoint
+                while (iter.hasNext()){
+                    bytes = iter.next();
+                    rec = LogRecord.createLogRecord(bytes);
+                    logList.add(rec);
+                    if (rec.op() == CHECKPOINT){
+                        break;
+                    } // Find corresponding START checkpoint
+                }
                 break;
             }
         }
@@ -195,48 +210,6 @@ public class RecoveryMgr {
                 lm.flush(lsn);
             }
         }
-    }
-
-    public void writeCheckpoint() {
-
-    }
-
-    /**
-     * getLog(), but until first checkpoint is reached.
-     */
-    public String getLogTC() {
-        Iterator<byte[]> iter = lm.iterator();
-        String list = "";
-        boolean lastModified = true;
-        while (iter.hasNext()) {
-            byte[] bytes = iter.next();
-            LogRecord rec = LogRecord.createLogRecord(bytes);
-            switch (rec.op()) {
-                case CHECKPOINT:
-                    list += "CHECKPOINT-";
-                    return list;
-                case START:
-                    list += "START-";
-                    lastModified = false;
-                    break;
-                case COMMIT:
-                    list += "COMMIT-";
-                    lastModified = false;
-                    break;
-                case ROLLBACK:
-                    list += "ROLLBACK-";
-                    lastModified = false;
-                    break;
-                case SETINT:
-                case SETSTRING:
-                    if (!lastModified) {
-                        list += "MODIFY-";
-                        lastModified = true;
-                    }
-                    break;
-            }
-        }
-        return list;
     }
 
     public String getLog() {

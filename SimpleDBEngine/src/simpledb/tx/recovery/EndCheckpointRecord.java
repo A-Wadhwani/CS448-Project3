@@ -4,12 +4,24 @@ import simpledb.file.Page;
 import simpledb.log.LogMgr;
 import simpledb.tx.Transaction;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Vector;
+
 /**
  * The END CHECKPOINT log record.
  * @author Edward Sciore
  */
 public class EndCheckpointRecord implements LogRecord {
-    public EndCheckpointRecord() {
+    Vector<Integer> activeTrans;
+    public EndCheckpointRecord(Page p) {
+        int tpos = Integer.BYTES;
+        activeTrans = new Vector<>();
+        int size = p.getInt(tpos);
+        for (int i = 0; i < size; i++) {
+            tpos += Integer.BYTES;
+            activeTrans.add(p.getInt(tpos));
+        }
     }
 
     public int op() {
@@ -32,7 +44,7 @@ public class EndCheckpointRecord implements LogRecord {
     public void redo(Transaction tx) {}
 
     public String toString() {
-        return "<END>";
+        return "<END "+ activeTrans.toString() + ">";
     }
 
     /**
@@ -41,10 +53,16 @@ public class EndCheckpointRecord implements LogRecord {
      * and nothing else.
      * @return the LSN of the last log value
      */
-    public static int writeToLog(LogMgr lm) {
-        byte[] rec = new byte[Integer.BYTES];
+    public static int writeToLog(LogMgr lm, Vector<Integer> activeTrans) {
+        byte[] rec = new byte[Integer.BYTES * (activeTrans.size() + 2)];
         Page p = new Page(rec);
         p.setInt(0, END);
+        int tpos = Integer.BYTES;
+        p.setInt(tpos, activeTrans.size());
+        for (Integer txnum : activeTrans) {
+            tpos += Integer.BYTES;
+            p.setInt(tpos, txnum);
+        }
         return lm.append(rec);
     }
 }

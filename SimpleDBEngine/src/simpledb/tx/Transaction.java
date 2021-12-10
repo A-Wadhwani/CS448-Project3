@@ -20,6 +20,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Transaction {
    private static int nextTxNum = 0;
    public static Vector<Integer> activeTrans; // ArrayList, but thread safe
+   public static Vector<Integer> completedTrans;
    private static final int END_OF_FILE = -1;
    private RecoveryMgr    recoveryMgr;
    private ConcurrencyMgr concurMgr;
@@ -27,6 +28,7 @@ public class Transaction {
    private FileMgr fm;
    private int txnum;
    private BufferList mybuffers;
+   private boolean isCommitted = false;
    
    /**
     * Create a new transaction and its associated 
@@ -43,6 +45,7 @@ public class Transaction {
    public Transaction(FileMgr fm, LogMgr lm, BufferMgr bm) {
       if (activeTrans == null){
          activeTrans = new Vector<>();
+         completedTrans = new Vector<>();
       }
       this.fm = fm;
       this.bm = bm;
@@ -60,11 +63,14 @@ public class Transaction {
     * release all locks, and unpin any pinned buffers.
     */
    public void commit() {
+      if (isCommitted) return;
       recoveryMgr.commit();
       System.out.println("transaction " + txnum + " committed");
       concurMgr.release();
       mybuffers.unpinAll();
+      completedTrans.add(txnum);
       activeTrans.remove(Integer.valueOf(txnum));
+      isCommitted = true;
    }
    
    /**
@@ -79,6 +85,7 @@ public class Transaction {
       System.out.println("transaction " + txnum + " rolled back");
       concurMgr.release();
       mybuffers.unpinAll();
+      completedTrans.add(txnum);
       activeTrans.remove(Integer.valueOf(txnum));
    }
    
@@ -95,7 +102,11 @@ public class Transaction {
    }
 
    public void checkpoint(){
-      recoveryMgr.checkpoint();
+      Vector<Integer> v = recoveryMgr.start();
+      if (!isCommitted)
+         commit();
+      recoveryMgr.end(v);
+      isCommitted = true;
    }
    
    /**
@@ -236,15 +247,7 @@ public class Transaction {
       return nextTxNum;
    }
 
-   public static synchronized boolean isIdle(int txnum) {
-      if (activeTrans.contains(txnum)){
-         // If there's any transactions apart from the
-         return activeTrans.size() == 1;
-      }
-      return false;
-   }
-
-   public static Collection<Integer> getActiveTransCopy() {
+   public static Vector<Integer> getActiveTransCopy() {
       return new Vector<>(activeTrans);
    }
 

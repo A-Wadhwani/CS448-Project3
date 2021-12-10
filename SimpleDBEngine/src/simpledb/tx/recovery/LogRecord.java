@@ -56,7 +56,7 @@ public interface LogRecord {
       case SETSTRING:
          return new SetStringRecord(p);
       case END:
-         return new EndCheckpointRecord();
+         return new EndCheckpointRecord(p);
       default:
          return null;
       }

@@ -15,7 +15,7 @@ public class RecoveryTest {
 
     public static void main(String[] args) throws Exception {
 //        idleTest();
-//        checkpointTest();
+        checkpointTest();
 //        originalTest();
     }
 
@@ -98,6 +98,7 @@ public class RecoveryTest {
         tx2.setString(blk1, 30, "def", false);
         tx1.commit();
         tx2.commit();
+        tx2.checkpoint();
         printValues("After Initialization:");
     }
 

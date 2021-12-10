@@ -5,20 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="380b690f-0f8e-45f8-95cf-3f25b2150971" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/EndCheckpointRecord.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/checkpointtest/simpledb.log" beforeDir="false" afterPath="$PROJECT_DIR$/checkpointtest/simpledb.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/idletest/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/idletest/simpledb.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/idletest/testfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/originaltest/simpledb.log" beforeDir="false" afterPath="$PROJECT_DIR$/originaltest/simpledb.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/originaltest/testfile" beforeDir="false" afterPath="$PROJECT_DIR$/originaltest/testfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recoverytest/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recoverytest/simpledb.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recoverytest/testfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpointtest/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpointtest/simpledb.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpointtest/testfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/originaltest/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/originaltest/simpledb.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/originaltest/testfile" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/EndCheckpointRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/EndCheckpointRecord.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/LogRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/LogRecord.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryMgr.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryMgr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -368,7 +366,7 @@
       <workItem from="1638855939944" duration="2384000" />
       <workItem from="1638906256926" duration="9186000" />
       <workItem from="1639090212503" duration="1657000" />
-      <workItem from="1639091908628" duration="5962000" />
+      <workItem from="1639091908628" duration="11401000" />
     </task>
     <servers />
   </component>
@@ -440,6 +438,20 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryTest.java</url>
+          <line>15</line>
+          <properties class="simpledb.tx.recovery.RecoveryTest" method="main">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/simpleclient/network/CreateProj2DB.java">
