@@ -10,7 +10,7 @@ import simpledb.tx.Transaction;
 public interface LogRecord {
    static final int CHECKPOINT = 0, START = 1,
          COMMIT = 2, ROLLBACK  = 3,
-         SETINT = 4, SETSTRING = 5;
+         SETINT = 4, SETSTRING = 5, END = 6;
 
    /**
     * Returns the log record's type.
@@ -43,18 +43,20 @@ public interface LogRecord {
    static LogRecord createLogRecord(byte[] bytes) {
       Page p = new Page(bytes);
       switch (p.getInt(0)) {
-      case CHECKPOINT: 
+      case CHECKPOINT:
          return new CheckpointRecord();
-      case START: 
+      case START:
          return new StartRecord(p);
-      case COMMIT: 
+      case COMMIT:
          return new CommitRecord(p);
-      case ROLLBACK: 
+      case ROLLBACK:
          return new RollbackRecord(p);
-      case SETINT: 
+      case SETINT:
          return new SetIntRecord(p);
-      case SETSTRING: 
+      case SETSTRING:
          return new SetStringRecord(p);
+      case END:
+         return new EndCheckpointRecord();
       default:
          return null;
       }

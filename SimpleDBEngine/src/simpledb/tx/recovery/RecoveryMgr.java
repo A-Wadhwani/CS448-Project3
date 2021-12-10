@@ -39,7 +39,6 @@ public class RecoveryMgr {
      * Write a commit record to the log, and flushes it to disk.
      */
     public void commit() {
-//        bm.flushAll(txnum);
         int lsn = CommitRecord.writeToLog(lm, txnum);
         lm.flush(lsn);
     }
@@ -60,31 +59,46 @@ public class RecoveryMgr {
      */
     public void recover() {
         doRecover();
-        if (DEBUG_MODE) {
-            System.out.println("Recovery Complete: " + getLog());
-            System.out.println();
-            System.out.println("Log File Reads: " + iterations);
-        }
         bm.flushAll();
-        int lsn = CheckpointRecord.writeToLog(lm);
-        lm.flush(lsn);
     }
 
     public void checkpoint() {
-        while (!Transaction.isIdle(txnum)) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                return;
-            }
-        }
-        bm.flushAll();
+        Collection<Integer> active = Transaction.getActiveTransCopy();
         int lsn = CheckpointRecord.writeToLog(lm);
         lm.flush(lsn);
-        if (DEBUG_MODE) {
-            System.out.println("Checkpoint Made: " + getLog());
-            System.out.println();
+        while (waitForActiveTransactions(active)) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+        for (Integer tx: active) {
+            bm.flushAll(tx);
+        }
+        lsn = EndCheckpointRecord.writeToLog(lm);
+        lm.flush(lsn);
+    }
+
+    public boolean waitForActiveTransactions(Collection<Integer> active) {
+        int count = 0;
+        for (Integer i : active)
+            if (!Transaction.activeTrans.contains(i))
+                count++;
+        return count != active.size();
+    }
+
+    public LogRecord getOp(int txNumber) {
+        Iterator<byte[]> iter = lm.iterator();
+        while (iter.hasNext()) {
+            byte[] bytes = iter.next();
+            LogRecord rec = LogRecord.createLogRecord(bytes);
+            if (rec.txNumber() == txNumber) {
+                return rec;
+            }
+
+        }
+        return null;
     }
 
     /**
@@ -142,6 +156,7 @@ public class RecoveryMgr {
      * or the end of the log.
      */
     private void doRecover() {
+        // t1 t2 C t3 e1 e2 EC e3
         //finding transactions after checkpoint
         ArrayList<LogRecord> logList = new ArrayList<>();
         Iterator<byte[]> iter = lm.iterator();
@@ -180,6 +195,10 @@ public class RecoveryMgr {
                 lm.flush(lsn);
             }
         }
+    }
+
+    public void writeCheckpoint() {
+
     }
 
     /**
@@ -221,34 +240,33 @@ public class RecoveryMgr {
     }
 
     public String getLog() {
+
         Iterator<byte[]> iter = lm.iterator();
         String list = "";
-        boolean lastModified = true;
         while (iter.hasNext()) {
             byte[] bytes = iter.next();
             LogRecord rec = LogRecord.createLogRecord(bytes);
             switch (rec.op()) {
                 case CHECKPOINT:
-                    list += "CHECKPOINT-";
+                    list += "START CHECKPOINT -" + rec + "\n";
                     break;
                 case START:
-                    list += "START-";
-                    lastModified = false;
+                    list += "START TRANSACTION -" + rec + "\n";
                     break;
                 case COMMIT:
-                    list += "COMMIT-";
-                    lastModified = false;
+                    list += "COMMIT TRANSACTION -" + rec + "\n";
                     break;
                 case ROLLBACK:
-                    list += "ROLLBACK-";
-                    lastModified = false;
+                    list += "ROLLBACK TRANSACTION -" + rec + "\n";
                     break;
                 case SETINT:
+                    list += "SETINT -" + rec + "\n";
+                    break;
                 case SETSTRING:
-                    if (!lastModified) {
-                        list += "MODIFY-";
-                        lastModified = true;
-                    }
+                    list += "SETSTRING -" + rec + "\n";
+                    break;
+                case END:
+                    list += "END CHECKPOINT -" + rec + "\n";
                     break;
             }
         }

@@ -6,6 +6,7 @@ import simpledb.buffer.*;
 import simpledb.tx.recovery.*;
 import simpledb.tx.concurrency.ConcurrencyMgr;
 
+import java.util.Collection;
 import java.util.Vector;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -18,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Transaction {
    private static int nextTxNum = 0;
-   private static Vector<Integer> activeTrans; // ArrayList, but thread safe
+   public static Vector<Integer> activeTrans; // ArrayList, but thread safe
    private static final int END_OF_FILE = -1;
    private RecoveryMgr    recoveryMgr;
    private ConcurrencyMgr concurMgr;
@@ -241,6 +242,10 @@ public class Transaction {
          return activeTrans.size() == 1;
       }
       return false;
+   }
+
+   public static Collection<Integer> getActiveTransCopy() {
+      return new Vector<>(activeTrans);
    }
 
    public String getLog() {
