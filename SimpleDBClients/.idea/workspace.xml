@@ -6,15 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="380b690f-0f8e-45f8-95cf-3f25b2150971" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/case1test/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/case1test/simpledb.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/case1test/testfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/case3test/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/case3test/simpledb.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/case3test/testfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simpleclient/network/CreateStudentDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/simpleclient/network/CreateStudentDB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/buffer/Buffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/buffer/Buffer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryMgr.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryMgr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SimpleDBEngine/src/simpledb/tx/recovery/RecoveryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -364,7 +357,7 @@
       <workItem from="1638855939944" duration="2384000" />
       <workItem from="1638906256926" duration="9186000" />
       <workItem from="1639090212503" duration="1657000" />
-      <workItem from="1639091908628" duration="33293000" />
+      <workItem from="1639091908628" duration="34076000" />
     </task>
     <servers />
   </component>

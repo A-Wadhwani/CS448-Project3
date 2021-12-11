@@ -82,7 +82,6 @@ public class Buffer {
          lm.flush(lsn);
          fm.write(blk, contents);
          txnum = -1;
-         numFlushes++;
       }
    }
 

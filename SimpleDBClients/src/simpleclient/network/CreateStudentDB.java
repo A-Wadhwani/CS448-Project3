@@ -5,7 +5,9 @@ import simpledb.jdbc.network.NetworkDriver;
 
 public class CreateStudentDB {
 
-   private static boolean doCheckpoint = true;
+   private static boolean doCheckpoint1 = true;
+   private static boolean doCheckpoint2 = false;
+   
    public static void main(String[] args) {
       Driver d = new NetworkDriver();
       String url = "jdbc:simpledb://localhost";
@@ -71,6 +73,10 @@ public class CreateStudentDB {
             stmt.executeUpdate(s + sectvals[i]);
          System.out.println("SECTION records inserted.");
 
+         if (doCheckpoint1){
+            stmt.executeUpdate("checkpoint");
+         }
+
          s = "create table ENROLL(EId int, StudentId int, SectionId int, Grade varchar(2))";
          stmt.executeUpdate(s);
          System.out.println("Table ENROLL created.");
@@ -86,7 +92,7 @@ public class CreateStudentDB {
             stmt.executeUpdate(s + enrollvals[i]);
          System.out.println("ENROLL records inserted.");
 
-         if (doCheckpoint){
+         if (doCheckpoint2){
             stmt.executeUpdate("checkpoint");
          }
 
