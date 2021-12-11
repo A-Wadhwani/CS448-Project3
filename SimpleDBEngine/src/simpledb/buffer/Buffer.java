@@ -81,7 +81,6 @@ public class Buffer {
       if (txnum >= 0) {
          lm.flush(lsn);
          fm.write(blk, contents);
-         System.out.println(txnum);
          txnum = -1;
          numFlushes++;
       }

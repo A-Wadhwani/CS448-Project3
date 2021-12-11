@@ -21,7 +21,7 @@ public class RecoveryMgr {
     private int txnum;
     public static int undos = 0;
     public static int redos = 0;
-    public static boolean DEBUG_MODE = true;
+    public static boolean DEBUG_MODE = false;
 
     /**
      * Create a recovery manager for the specified transaction.
@@ -78,11 +78,13 @@ public class RecoveryMgr {
                 e.printStackTrace();
             }
         }
+        long time = System.nanoTime();
         for (Integer tx: active) {
             bm.flushAll(tx);
         }
         int lsn = EndCheckpointRecord.writeToLog(lm, Transaction.completedTrans);
         lm.flush(lsn);
+        System.out.println("Checkpoint Time: " + (System.nanoTime() - time));
     }
 
     public boolean wait(Collection<Integer> active) {
@@ -150,6 +152,7 @@ public class RecoveryMgr {
      * or the end of the log.
      */
     private void doRecover() {
+        long time = System.nanoTime();
         // t1 t2 C t3 e1 e2 EC e3
         //finding transactions after checkpoint
         ArrayList<LogRecord> logList = new ArrayList<>();
@@ -181,7 +184,8 @@ public class RecoveryMgr {
             } else if (record.op() == COMMIT || record.op() == ROLLBACK) {
                 undoList.remove(record.txNumber());
             }
-            System.out.println("Redo: " + record);
+            if (DEBUG_MODE)
+                System.out.println("Redo: " + record);
             record.redo(tx);
             redos++;
         }
@@ -193,7 +197,8 @@ public class RecoveryMgr {
             if (undoList.isEmpty()) {
                 break;
             } else if (undoList.contains(rec.txNumber()) && (rec.op() == SETSTRING || rec.op() == SETINT)) {
-                System.out.println("Undo: " + rec);
+                if (DEBUG_MODE)
+                    System.out.println("Undo: " + rec);
                 rec.undo(tx);
                 undos++;
             } else if (undoList.contains(rec.txNumber()) && rec.op() == START) {
@@ -202,8 +207,11 @@ public class RecoveryMgr {
                 lm.flush(lsn);
             }
         }
-        System.out.println("Undos: " + RecoveryMgr.undos);
-        System.out.println("Redos: " + RecoveryMgr.redos);
+        if (DEBUG_MODE) {
+            System.out.println("Undos: " + RecoveryMgr.undos);
+            System.out.println("Redos: " + RecoveryMgr.redos);
+        }
+        System.out.println("Recovery Time:  " + (System.nanoTime() - time));
     }
 
     public String getLog() {

@@ -109,6 +109,7 @@ public class RecoveryTest {
             initialize();
             modify();
             checkpoint();
+            System.out.println(tx4.getLog());
             System.out.println("Number of Flushes: " + Buffer.numFlushes);
         } else {
             recover();

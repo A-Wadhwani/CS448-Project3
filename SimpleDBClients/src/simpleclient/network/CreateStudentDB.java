@@ -5,7 +5,7 @@ import simpledb.jdbc.network.NetworkDriver;
 
 public class CreateStudentDB {
 
-   private static boolean doCheckpoint = false;
+   private static boolean doCheckpoint = true;
    public static void main(String[] args) {
       Driver d = new NetworkDriver();
       String url = "jdbc:simpledb://localhost";
