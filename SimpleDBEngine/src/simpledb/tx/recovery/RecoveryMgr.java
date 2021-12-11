@@ -65,7 +65,7 @@ public class RecoveryMgr {
 
     public Vector<Integer> start() {
         Vector<Integer> active = Transaction.getActiveTransCopy();
-        int lsn = CheckpointRecord.writeToLog(lm);
+        int lsn = StartCheckpointRecord.writeToLog(lm);
         lm.flush(lsn);
         return active;
     }
@@ -158,13 +158,13 @@ public class RecoveryMgr {
             byte[] bytes = iter.next();
             LogRecord rec = LogRecord.createLogRecord(bytes);
             logList.add(rec);
-            if (rec.op() == END) {
+            if (rec.op() == ENDCHECKPOINT) {
                 // Find END checkpoint
                 while (iter.hasNext()){
                     bytes = iter.next();
                     rec = LogRecord.createLogRecord(bytes);
                     logList.add(rec);
-                    if (rec.op() == CHECKPOINT){
+                    if (rec.op() == STARTCHECKPOINT){
                         break;
                     } // Find corresponding START checkpoint
                 }
@@ -181,6 +181,7 @@ public class RecoveryMgr {
             } else if (record.op() == COMMIT || record.op() == ROLLBACK) {
                 undoList.remove(record.txNumber());
             }
+            System.out.println("Redo: " + record);
             record.redo(tx);
             redos++;
         }
@@ -192,6 +193,7 @@ public class RecoveryMgr {
             if (undoList.isEmpty()) {
                 break;
             } else if (undoList.contains(rec.txNumber()) && (rec.op() == SETSTRING || rec.op() == SETINT)) {
+                System.out.println("Undo: " + rec);
                 rec.undo(tx);
                 undos++;
             } else if (undoList.contains(rec.txNumber()) && rec.op() == START) {
@@ -212,7 +214,7 @@ public class RecoveryMgr {
             byte[] bytes = iter.next();
             LogRecord rec = LogRecord.createLogRecord(bytes);
             switch (rec.op()) {
-                case CHECKPOINT:
+                case STARTCHECKPOINT:
                     list += "START CHECKPOINT -" + rec + "\n";
                     break;
                 case START:
@@ -230,7 +232,7 @@ public class RecoveryMgr {
                 case SETSTRING:
                     list += "SETSTRING -" + rec + "\n";
                     break;
-                case END:
+                case ENDCHECKPOINT:
                     list += "END CHECKPOINT -" + rec + "\n";
                     break;
             }

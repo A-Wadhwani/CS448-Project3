@@ -18,6 +18,7 @@ public class RecoveryTest {
     public static void main(String[] args) throws Exception {
 //        case1Test();
 //        case2Test();
+        case3Test();
 //        originalTest();
     }
 
@@ -131,6 +132,72 @@ public class RecoveryTest {
             recover();
             System.out.println("Undos with Checkpoint: " + RecoveryMgr.undos);
             System.out.println("Redos with Checkpoint: " + RecoveryMgr.redos);
+        }
+    }
+
+    /*
+     * Remove checkpointtest folder. Run twice.
+     * In comparison to Original test, a checkpoint
+     * is created after the transactions are committed.
+     * We should be able to see the changes after
+     * rollback visible when running it again.
+     */
+    // s1 s2 C s3 e1 e2 E s4 C e3 e4 E
+    public static void case3Test() {
+        db = new SimpleDB("case3test", 400, 8);
+        fm = db.fileMgr();
+        bm = db.bufferMgr();
+        blk0 = new BlockId("testfile", 0);
+        blk1 = new BlockId("testfile", 1);
+
+        if (fm.length("testfile") == 0) {
+            Transaction tx1 = db.newTx();
+            Transaction tx2 = db.newTx();
+            tx1.pin(blk0);
+            tx2.pin(blk1);
+            int pos = 0;
+            for (int i = 0; i < 6; i++) {
+                tx1.setInt(blk0, pos, pos, false);
+                tx2.setInt(blk1, pos, pos, false);
+                pos += Integer.BYTES;
+            }
+            tx1.setString(blk0, 30, "abc", false);
+            tx2.setString(blk1, 30, "def", false);
+            Vector<Integer> v = tx2.start();
+            tx1.commit();
+
+            Transaction tx3 = db.newTx();
+            tx3.pin(blk0);
+            pos = 0;
+            for (int i = 0; i < 6; i++) {
+                tx3.setInt(blk0, pos, pos + 100, true);
+                pos += Integer.BYTES;
+            }
+            tx2.commit();
+            tx2.end(v);
+            tx3.setString(blk0, 30, "uvw", true);
+
+            Transaction tx4 = db.newTx();
+            tx4.pin(blk1);
+            pos = 0;
+            for (int i = 0; i < 6; i++) {
+                tx4.setInt(blk1, pos, pos + 100, true);
+                pos += Integer.BYTES;
+            }
+            v = tx4.start();
+            tx4.setString(blk1, 30, "xyz", true);
+            bm.flushAll(3);
+            bm.flushAll(4);
+
+            tx3.commit();
+            System.out.println(tx4.getLog());
+            printValues("After rollback:");
+            System.out.println("Number of Flushes: " + Buffer.numFlushes);
+        } else {
+            recover();
+            System.out.println("Undos with Checkpoint: " + RecoveryMgr.undos);
+            System.out.println("Redos with Checkpoint: " + RecoveryMgr.redos);
+            System.out.println("Number of Flushes: " + Buffer.numFlushes);
         }
     }
 

@@ -4,8 +4,6 @@ import simpledb.file.Page;
 import simpledb.log.LogMgr;
 import simpledb.tx.Transaction;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Vector;
 
 /**
@@ -25,7 +23,7 @@ public class EndCheckpointRecord implements LogRecord {
     }
 
     public int op() {
-        return END;
+        return ENDCHECKPOINT;
     }
 
     /**
@@ -44,7 +42,7 @@ public class EndCheckpointRecord implements LogRecord {
     public void redo(Transaction tx) {}
 
     public String toString() {
-        return "<END "+ activeTrans.toString() + ">";
+        return "<ENDCHECKPOINT "+ activeTrans.toString() + ">";
     }
 
     /**
@@ -56,7 +54,7 @@ public class EndCheckpointRecord implements LogRecord {
     public static int writeToLog(LogMgr lm, Vector<Integer> activeTrans) {
         byte[] rec = new byte[Integer.BYTES * (activeTrans.size() + 2)];
         Page p = new Page(rec);
-        p.setInt(0, END);
+        p.setInt(0, ENDCHECKPOINT);
         int tpos = Integer.BYTES;
         p.setInt(tpos, activeTrans.size());
         for (Integer txnum : activeTrans) {

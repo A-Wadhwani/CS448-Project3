@@ -8,12 +8,12 @@ import simpledb.tx.Transaction;
  * The CHECKPOINT log record.
  * @author Edward Sciore
  */
-public class CheckpointRecord implements LogRecord {
-   public CheckpointRecord() {
+public class StartCheckpointRecord implements LogRecord {
+   public StartCheckpointRecord() {
    }
 
    public int op() {
-      return CHECKPOINT;
+      return STARTCHECKPOINT;
    }
 
    /**
@@ -32,7 +32,7 @@ public class CheckpointRecord implements LogRecord {
    public void redo(Transaction tx) {}
 
    public String toString() {
-      return "<CHECKPOINT>";
+      return "<STARTCHECKPOINT>";
    }
 
    /** 
@@ -44,7 +44,7 @@ public class CheckpointRecord implements LogRecord {
    public static int writeToLog(LogMgr lm) {
       byte[] rec = new byte[Integer.BYTES];
       Page p = new Page(rec);
-      p.setInt(0, CHECKPOINT);
+      p.setInt(0, STARTCHECKPOINT);
       return lm.append(rec);
    }
 }
